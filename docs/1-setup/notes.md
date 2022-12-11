@@ -35,7 +35,7 @@ C:\Users\mladen.tsvetkov>
 
 ```
 git clone https://github.com/mladentsvetkov/rct-trn-jan-2022.git
-git checkout 42bd2183186b92a335cbe50d16ae4885046cfa4f
+git checkout [commit id for this lesson]
 ```
 
 ## install the app
