@@ -1,10 +1,9 @@
-import './App.css'
-import { Alert } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import { Alert } from '@mui/material'
 
-const App = () => {
+export const App = () => {
   const { data } = useQuery(['use-query-test'], () =>
     axios('http://www.randomnumberapi.com/api/v1.0/random?min=100&max=1000&count=5')
   )
@@ -29,5 +28,3 @@ const App = () => {
     </div>
   )
 }
-
-export default App
