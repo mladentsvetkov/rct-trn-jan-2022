@@ -1,33 +1,28 @@
-import { Link } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
-import { Alert } from '@mui/material'
-// import { createElement, ReactNode, useState } from 'react'
-// import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import Container from '@mui/material/Container'
+import { CardMain } from 'components/CardMain/CardMain'
+import { useState } from 'react'
 
 export const App = () => {
-  const { data } = useQuery(['use-query-test'], () =>
-    axios('http://www.randomnumberapi.com/api/v1.0/random?min=100&max=1000&count=5')
-  )
-
-  // let a = 3
-
-  // let b: boolean = a
-
-  // console.log(b)
-
-  // console.log('hello')
+  const [cardsProps, setCardsProps] = useState([{ color: 'red' }, { color: 'green' }, { color: 'blue' }])
 
   return (
-    <div>
-      <Alert color="warning">Warning! This is my first MUI component instance :)</Alert>
-      <br />
-      <br />
-      <div>This is a random response to test react query and axios: {data?.data}</div>
-      <br />
-      <br />
-      <Link to="/somepage">Let's test this dom router.</Link>
-    </div>
+    <Container
+      sx={{
+        backgroundColor: 'lightcoral',
+        display: 'flex',
+        gap: '10px',
+        justifyContent: 'center',
+        padding: '10px',
+        flexWrap: 'wrap',
+      }}
+    >
+      {cardsProps.map((cardProp) => (
+        <CardMain
+          color={cardProp.color}
+          logInParent={(ev) => console.log('hey :) got logged', ev.target.toString())}
+          key={cardProp.color}
+        />
+      ))}
+    </Container>
   )
 }
