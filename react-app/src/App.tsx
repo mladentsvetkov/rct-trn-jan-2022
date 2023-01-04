@@ -4,6 +4,7 @@ import { VeryHighComponent } from 'components/VeryHighComponent/VeryHighComponen
 import { useEffect, useMemo, useRef, useState, MouseEvent } from 'react'
 import { Box, Button } from '@mui/material'
 import { JokesSearch } from 'components/JokesSearch/JokesSearch'
+import { AuthenticationProvider } from 'providers/authentication/AuthenicationProvider'
 
 const findPrime = (num: number) => {
   console.log('calculating prime numbers')
@@ -36,6 +37,7 @@ const findPrime = (num: number) => {
 export const App = () => {
   const [cardsProps, setCardsProps] = useState([{ color: 'red' }, { color: 'green' }, { color: 'blue' }])
   const [triggerRerender, setTriggerRerender] = useState(false)
+
   const targetRefComponent = useRef<null | HTMLDivElement>(null)
 
   const scroll = () => {
@@ -44,7 +46,7 @@ export const App = () => {
 
   // useEffect(() => {
   //   scroll()
-  // }, [])
+  // }, [triggerRerender])
 
   // const somePrimeNumberExpensive = findPrime(1332318)
   const somePrimeNumberExpensive = useMemo(() => findPrime(1332318), [])
@@ -68,20 +70,22 @@ export const App = () => {
         <Box>Prime number: {somePrimeNumberExpensive}</Box>
       </Box>
       <VeryHighComponent />
-      <Container
-        sx={{
-          backgroundColor: 'lightcoral',
-          display: 'flex',
-          gap: '10px',
-          justifyContent: 'center',
-          padding: '10px',
-          flexWrap: 'wrap',
-        }}
-      >
-        {cardsProps.map((cardProp) => (
-          <CardMain color={cardProp.color} logInParent={handleLogInParent} key={cardProp.color} />
-        ))}
-      </Container>
+      <AuthenticationProvider>
+        <Container
+          sx={{
+            backgroundColor: 'lightcoral',
+            display: 'flex',
+            gap: '10px',
+            justifyContent: 'center',
+            padding: '10px',
+            flexWrap: 'wrap',
+          }}
+        >
+          {cardsProps.map((cardProp) => (
+            <CardMain color={cardProp.color} logInParent={handleLogInParent} key={cardProp.color} />
+          ))}
+        </Container>
+      </AuthenticationProvider>
       <div ref={targetRefComponent}>go here please</div>
     </>
   )

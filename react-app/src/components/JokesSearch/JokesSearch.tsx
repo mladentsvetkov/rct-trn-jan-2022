@@ -7,6 +7,7 @@ export const JokesSearch = () => {
   const [selectedCategory, setSelectedCategory] = useState('')
   const [jokes, setJokes] = useState<{ text: string; id: string }[]>([])
   const [randomJoke, setRandomJoke] = useState('')
+  const [isError, setIsError] = useState(false)
 
   const getCategories = async () => {
     const response = await fetch('https://api.chucknorris.io/jokes/categories')
@@ -53,17 +54,17 @@ export const JokesSearch = () => {
     getCategories()
   }, [])
 
-  // useEffect(() => {
-  //   if (search.length >= 3) {
-  //     searchJokeByText(search)
-  //   }
-  // }, [search])
+  useEffect(() => {
+    if (search.length >= 3) {
+      searchJokeByText(search)
+    }
+  }, [search])
 
-  // useEffect(() => {
-  //   if (selectedCategory.length > 0) {
-  //     getRandomPerCategory(selectedCategory)
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (selectedCategory.length > 0) {
+      getRandomPerCategory(selectedCategory)
+    }
+  }, [selectedCategory])
 
   return (
     <Box padding={'10rem'}>
@@ -115,18 +116,22 @@ export const JokesSearch = () => {
         </label>
         <button style={{ fontSize: '24px' }}>Submit</button>
       </form>
-      <Box display={'flex'} flexDirection={'column'} gap="10px">
-        <Typography variant="h4">Random joke per category:</Typography>
-        <Typography variant="h5">{randomJoke}</Typography>
-        <Typography variant="h4">Jokes search result:</Typography>
-        <ul>
-          {jokes.map((joke) => (
-            <li key={joke.id}>
-              <Typography variant="h5">{joke.text}</Typography>
-            </li>
-          ))}
-        </ul>
-      </Box>
+      {isError ? (
+        <p>Error!</p>
+      ) : (
+        <Box display={'flex'} flexDirection={'column'} gap="10px">
+          <Typography variant="h4">Random joke per category:</Typography>
+          <Typography variant="h5">{randomJoke}</Typography>
+          <Typography variant="h4">Jokes search result:</Typography>
+          <ul>
+            {jokes.map((joke) => (
+              <li key={joke.id}>
+                <Typography variant="h5">{joke.text}</Typography>
+              </li>
+            ))}
+          </ul>
+        </Box>
+      )}
     </Box>
   )
 }

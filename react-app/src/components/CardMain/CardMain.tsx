@@ -4,7 +4,8 @@ import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import { MouseEvent } from 'react'
+import { MouseEvent, useContext } from 'react'
+import { AuthContext } from 'providers/authentication/AuthenicationProvider'
 
 const bull = (
   <Box component="span" sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}>
@@ -19,6 +20,8 @@ interface CardMainProps {
 
 export const CardMain = (props: CardMainProps) => {
   const { color, logInParent } = props
+
+  const { isAuth, toggleAuth } = useContext(AuthContext)
 
   return (
     <Card sx={{ minWidth: 275, backgroundColor: { color } }}>
