@@ -1,5 +1,9 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography, CircularProgress, Alert, Button } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
+import axiosInstanceLocal from 'axiosLocal'
+
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 export const JokesSearch = () => {
   const [search, setSearch] = useState('')
@@ -10,10 +14,11 @@ export const JokesSearch = () => {
   const [isError, setIsError] = useState(false)
 
   const getCategories = async () => {
-    const response = await fetch('https://api.chucknorris.io/jokes/categories')
-    const data: string[] = await response.json()
+    const response = await axiosInstanceLocal('/categories')
+    const data: string[] = response.data
 
-    setCategories(data)
+    setCategories(data) // remove this!!!!
+    return data
   }
 
   const getRandomPerCategory = async (category: string) => {
@@ -54,6 +59,25 @@ export const JokesSearch = () => {
     getCategories()
   }, [])
 
+  const {
+    data: queryData,
+    isError: queryIsError,
+    isLoading: queryIsLoading,
+    isFetching: queryIsFetching,
+    refetch: queryRefetch,
+  } = useQuery(['getJokesUniqueKey'], getCategories, {
+    retry: false,
+    onSuccess: () => toast.success('Yessss!'),
+    onError: () => toast.warn('Noooo!'),
+    onSettled: () => toast.info('Whatever....'),
+    refetchOnWindowFocus: false,
+    select: (data) => {
+      console.log(data)
+      console.log(' i take the response data and map it to ui model')
+      return data
+    },
+  })
+
   useEffect(() => {
     if (search.length >= 3) {
       searchJokeByText(search)
@@ -68,6 +92,10 @@ export const JokesSearch = () => {
 
   return (
     <Box padding={'10rem'}>
+      <Button onClick={() => queryRefetch()}>Refetch</Button>
+      {(queryIsLoading || queryIsFetching) && <CircularProgress />}
+      {queryIsError && <Alert severity="error">This is an error alert — check it out!</Alert>}
+      {!queryIsLoading && !queryIsFetching && !queryIsError && queryData && queryData.length}
       <form
         style={{ display: 'flex', gap: '50px', alignItems: 'center', fontSize: '24px' }}
         onSubmit={(ev) => {
