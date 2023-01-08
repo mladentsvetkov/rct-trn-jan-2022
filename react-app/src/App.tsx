@@ -1,10 +1,13 @@
 import Container from '@mui/material/Container'
 import { CardMain } from 'components/CardMain/CardMain'
 import { VeryHighComponent } from 'components/VeryHighComponent/VeryHighComponent'
-import { useEffect, useMemo, useRef, useState, MouseEvent } from 'react'
+import { useContext, useMemo, useRef, useState, MouseEvent } from 'react'
 import { Box, Button } from '@mui/material'
 import { JokesSearch } from 'components/JokesSearch/JokesSearch'
 import { AuthenticationProvider } from 'providers/authentication/AuthenicationProvider'
+import CatsContainer from 'components/CatsContainer/CatsContainer'
+import { CatsContext } from 'pages/CatsStore'
+import { Link } from 'react-router-dom'
 
 const findPrime = (num: number) => {
   console.log('calculating prime numbers')
@@ -39,6 +42,7 @@ export const App = () => {
   const [triggerRerender, setTriggerRerender] = useState(false)
 
   const targetRefComponent = useRef<null | HTMLDivElement>(null)
+  const { state, dispatch } = useContext(CatsContext)
 
   const scroll = () => {
     targetRefComponent.current?.scrollIntoView({ behavior: 'smooth' })
@@ -49,9 +53,9 @@ export const App = () => {
   // }, [triggerRerender])
 
   // const somePrimeNumberExpensive = findPrime(1332318)
-  const somePrimeNumberExpensive = useMemo(() => findPrime(1332318), [])
+  // const somePrimeNumberExpensive = useMemo(() => findPrime(1332318), [])
 
-  console.log('rerendered')
+  // console.log('rerendered')
 
   const handleLogInParent = (ev: MouseEvent<HTMLButtonElement>) => {
     console.log('hey :) got logged', ev.target.toString())
@@ -59,6 +63,9 @@ export const App = () => {
 
   return (
     <>
+      <Link to="somepage">Go to SomePage</Link>
+      <Link to="muidemo">Go to MUI Demo</Link>
+      <CatsContainer state={state} dispatch={dispatch} />
       <JokesSearch />
       <Box margin={'10rem'} fontSize="5rem">
         <Button onClick={scroll} sx={{ fontSize: '2rem' }}>
@@ -67,7 +74,7 @@ export const App = () => {
         <Button onClick={() => setTriggerRerender(!triggerRerender)} sx={{ fontSize: '2rem' }}>
           trigger rerender
         </Button>
-        <Box>Prime number: {somePrimeNumberExpensive}</Box>
+        {/* <Box>Prime number: {somePrimeNumberExpensive}</Box> */}
       </Box>
       <VeryHighComponent />
       <AuthenticationProvider>

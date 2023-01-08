@@ -67,6 +67,7 @@ export const JokesSearch = () => {
     refetch: queryRefetch,
   } = useQuery(['getJokesUniqueKey'], getCategories, {
     retry: false,
+    enabled: false,
     onSuccess: () => toast.success('Yessss!'),
     onError: () => toast.warn('Noooo!'),
     onSettled: () => toast.info('Whatever....'),

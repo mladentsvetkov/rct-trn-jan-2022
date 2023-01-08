@@ -4,23 +4,33 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
+import { CssBaseline } from '@mui/material'
 
 import { App } from 'App'
 import { SomePage } from 'pages/SomePage'
+import CatsStore from 'pages/CatsStore'
+import { Theme } from 'providers/theme/Theme'
+import MuiDemo from 'pages/MuiDemo'
 
 const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <ToastContainer />
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <Routes>
-          <Route path="/somepage" element={<SomePage />} />
-          <Route path="/" element={<App />} />
-        </Routes>
-      </QueryClientProvider>
-    </BrowserRouter>
+    {/* <CssBaseline /> */}
+    <Theme>
+      <ToastContainer />
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <CatsStore>
+            <Routes>
+              <Route path="/somepage" element={<SomePage />} />
+              <Route path="/muidemo" element={<MuiDemo />} />
+              <Route path="/" element={<App />} />
+            </Routes>
+          </CatsStore>
+        </QueryClientProvider>
+      </BrowserRouter>
+    </Theme>
   </React.StrictMode>
 )

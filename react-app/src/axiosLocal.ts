@@ -9,21 +9,21 @@ const axiosInstanceLocal: any = axios.create({
   baseURL: BASE_URL,
 })
 
-axiosInstanceLocal.interceptors.request.use(
-  // async
-  async (config: any) => {
-    const token = true
-    // const token = await getToken()
-    if (token) {
-      console.log('I am authenticating')
-      // config.headers['Authorization'] = 'Bearer ' + token
-    }
-    return config
-  },
-  (error: any) => {
-    Promise.reject(error)
-  }
-)
+// axiosInstanceLocal.interceptors.request.use(
+//   // async
+//   async (config: any) => {
+//     const token = true
+//     // const token = await getToken()
+//     if (token) {
+//       console.log('I am authenticating')
+//       // config.headers['Authorization'] = 'Bearer ' + token
+//     }
+//     return config
+//   },
+//   (error: any) => {
+//     Promise.reject(error)
+//   }
+// )
 
 // add delay:
 // axiosInstanceLocal.interceptors.request.use(async (config: any) => {
