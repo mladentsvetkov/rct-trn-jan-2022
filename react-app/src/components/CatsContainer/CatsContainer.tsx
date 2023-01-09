@@ -6,6 +6,8 @@ const CatsContainer = ({ state, dispatch }: { state: State; dispatch: Dispatch<A
   <Container sx={{ margin: '30px' }}>
     <Box width={'20rem'} component="form" display="flex" gap="1rem" noValidate autoComplete="off">
       <TextField
+        sx={{ '& .MuiFormLabel-root': { color: 'red' } }}
+        inputProps={{ max: 5 }}
         value={state.query.limit}
         type={'number'}
         id="limit"
@@ -18,7 +20,11 @@ const CatsContainer = ({ state, dispatch }: { state: State; dispatch: Dispatch<A
           })
         }
       />
-      <Button variant="outlined" onClick={() => dispatch({ type: ActionType.deleteData })}>
+      <Button
+        sx={{ fontSize: '20px', fontStyle: 'italic', padding: '20px' }}
+        variant="outlined"
+        onClick={() => dispatch({ type: ActionType.deleteData })}
+      >
         Delete them cats!
       </Button>
     </Box>

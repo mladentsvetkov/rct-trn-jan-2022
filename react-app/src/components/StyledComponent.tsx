@@ -1,8 +1,8 @@
 import { styled } from '@mui/material/styles'
-import { RadioGroup, RadioGroupProps } from '@mui/material'
+import { RadioGroup } from '@mui/material'
 import { ReactNode } from 'react'
 
-const StyledComponent = styled(RadioGroup)<RadioGroupProps>(({ theme }) => ({
+const StyledComponent = styled(RadioGroup)(({ theme }) => ({
   width: '250px',
   color: theme.palette.action.active,
   '& .MuiFormControlLabel-label': {
