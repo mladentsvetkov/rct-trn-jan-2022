@@ -65,6 +65,7 @@ export const App = () => {
     <>
       <Link to="somepage">Go to SomePage</Link>
       <Link to="muidemo">Go to MUI Demo</Link>
+      <Link to="forms-example">Go to forms example</Link>
       <CatsContainer state={state} dispatch={dispatch} />
       <JokesSearch />
       <Box margin={'10rem'} fontSize="5rem">
